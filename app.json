@@ -1,0 +1,33 @@
+{
+  "expo": {
+    "name": "TOGURO'S",
+    "slug": "TOGURO'S",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/togurologo.png",
+    "userInterfaceStyle": "light",
+    "newArchEnabled": true,
+    "splash": {
+      "image": "./assets/togurologo2.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#000000"
+    },
+    "ios": {
+      "supportsTablet": true
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/togurologo2.png",
+        "backgroundColor": "#ffffff"
+      }
+    },
+    "web": {
+      "favicon": "./assets/favicon.png"
+    },
+    "plugins": [
+      "expo-video",
+      "expo-font",
+      "expo-audio"
+    ]
+  }
+}
