@@ -1,8 +1,9 @@
 import React, {useState} from "react";
 import {Card} from 'react-native-paper';
-import { View, TextInput, TouchableOpacity } from "react-native";
+import { View, TextInput, TouchableOpacity, Alert} from "react-native";
 import { CameraView, CameraType, useCameraPermissions } from "expo-camera";
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 import Texto from '../../Componets/Texto'
 import styles from './estilosPerfil'
@@ -12,6 +13,11 @@ export default function Index(){
     const[facing, setFacing] = useState<CameraType>('back');
     const[permission, requestPermission] = useCameraPermissions();
     
+    //Informações do perfil
+    const [nome, setNome] = useState('');
+    const [email, setEmail] = useState('');
+    const [whatsapp, setWhatsapp] = useState('');
+
     //Se as permissões da câmera ainda estiverem carregando, exibe uma view vazia
     if(!permission) {
         return <View/>;
@@ -32,6 +38,15 @@ export default function Index(){
         setFacing(current=>(current === 'back' ? 'front' : 'back'));
     }
 
+    //Salvar informações no perfil
+    async function salvarPerfil(){
+        const perfil = {nome, email, whatsapp}
+        await AsyncStorage.setItem('Perfil', JSON.stringify(perfil));
+        Alert.alert('Perfil salvo com sucesso!!');
+        console.log(perfil);
+
+    }
+
     return <View style={styles.container}>
                 <CameraView facing={facing} style={styles.camera}>
                     <View style={styles.cameraContainer}>
@@ -43,14 +58,22 @@ export default function Index(){
                 <Card mode='elevated' style={styles.cardContainer}>
                     <Card.Content>
                         <Texto style={styles.text}>Nome completo</Texto>
-                        <TextInput style={styles.input} placeholder="nome Completo"/>
+                        <TextInput style={styles.input} placeholder="nome Completo" value={nome} onChangeText={setNome}/>
                         
                         <Texto style={styles.text}>E-Mail</Texto>
-                        <TextInput style={styles.input} placeholder="E-mail"/>
+                        <TextInput style={styles.input} placeholder="E-mail" value={email} onChangeText={setEmail}/>
 
                         <Texto style={styles.text}>WhatsApp</Texto>
-                        <TextInput style={styles.input} placeholder="Número" keyboardType="numeric"/>
+                        <TextInput style={styles.input} placeholder="Número" keyboardType="numeric" value={whatsapp} onChangeText={setWhatsapp}/>
                     </Card.Content>
+                    <Card.Actions>
+                        <TouchableOpacity style={styles.botao} onPress={salvarPerfil}>
+                            <Texto style={styles.textoBotao}>
+
+                                <Ionicons name="save" size={20} color="white"/>Salvar Perfil
+                            </Texto>
+                        </TouchableOpacity>
+                    </Card.Actions>
                 </Card>
         </View>
 }

@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import Sobre from "./src/screens/sobre/Sobre";
 import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
@@ -11,6 +11,10 @@ import { ScrollView } from "react-native";
 import { Exile_400Regular } from "@expo-google-fonts/exile";
 import { PoetsenOne_400Regular } from "@expo-google-fonts/poetsen-one";
 import {useAudioPlayer} from "expo-audio";
+// Importa componentes do React Native
+import { TouchableOpacity, View } from "react-native";
+import Texto from "./src/Componets/Texto";
+import stylesGeral from "./src/screens/estilos_geral";
 
 //menu perfil
 import Perfil from './src/screens/perfil'
@@ -21,7 +25,25 @@ function MenuProdutos(){
 
 //Audio
 function MenuAudio(){
-  
+  const audioSource = require('./assets/acdc_highway_to_hell.mp3');
+  const player = useAudioPlayer(audioSource);
+  const [isPlaying, setIsPlaying] = useState(false);
+
+  const onOff = () => {
+    if (isPlaying) {
+      player.pause();
+      setIsPlaying(false);
+    } else {
+      player.play();
+      setIsPlaying(true);
+    }
+  };
+
+  return (
+    <TouchableOpacity onPress={onOff} style={stylesGeral.botaoAudio}>
+      <Ionicons name={isPlaying ? "pause" : "play"} size={30} color="#fff" />
+    </TouchableOpacity>
+  );
 }
 
 //configuração do menu
@@ -77,6 +99,7 @@ export default function App() {
   }
   return <NavigationContainer>
     <Menu />
+    <MenuAudio/>
   </NavigationContainer>
 }
 
