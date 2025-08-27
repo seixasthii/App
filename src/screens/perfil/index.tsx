@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useState, useEffect} from "react";
 import {Card} from 'react-native-paper';
 import { View, TextInput, TouchableOpacity, Alert} from "react-native";
 import { CameraView, CameraType, useCameraPermissions } from "expo-camera";
@@ -17,6 +17,20 @@ export default function Index(){
     const [nome, setNome] = useState('');
     const [email, setEmail] = useState('');
     const [whatsapp, setWhatsapp] = useState('');
+
+    //carrega os dados do perfil salvo
+    useEffect(()=>{
+        async function carregarPerfil(){
+            const perfilSalvo = await AsyncStorage.getItem('Perfil')
+            if(perfilSalvo){
+                const perfil = JSON.parse(perfilSalvo);
+                setNome(perfil.nome)
+                setEmail(perfil.email)
+                setWhatsapp(perfil.whatsapp)
+            }
+        }
+        carregarPerfil()
+    }, [])
 
     //Se as permissões da câmera ainda estiverem carregando, exibe uma view vazia
     if(!permission) {
