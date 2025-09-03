@@ -19,6 +19,9 @@ import stylesGeral from "./src/screens/estilos_geral";
 //menu perfil
 import Perfil from './src/screens/perfil'
 
+// Menu lista de desejos
+import ListaDesejos from './src/screens/ListaDesejos'
+
 function MenuProdutos(){
   return <Exebir {...ListaProdutos}/>
 }
@@ -83,6 +86,7 @@ function Menu() {
 
     <Tab.Screen name='Sobre' component={Sobre} />
     <Tab.Screen name="Produtos" component={MenuProdutos} />
+    <Tab.Screen name="Lista Desejos" component={ListaDesejos} />
     <Tab.Screen name="treinos" component={Sobre} />
     <Tab.Screen name="Perfil" component={Perfil} />
   </Tab.Navigator>

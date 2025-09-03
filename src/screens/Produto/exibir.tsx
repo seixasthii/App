@@ -1,14 +1,28 @@
 import React, { useState } from "react";
-import { View, TouchableOpacity, Modal, Image } from "react-native";
+import { View, TouchableOpacity, Modal, Image, Alert } from "react-native";
 import { Card } from "react-native-paper";
 import Ionicons from "react-native-vector-icons/Ionicons"
 import PagerView from "react-native-pager-view";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 import Texto from '../../Componets/Texto';
 import styles from './estilosProd'
 
 export default function Produto({ prod: { id, nome, descricao, imagem, slider} }: any) {
     const [statusModal, acaoAbreFecha] = useState(false);
+
+    //Função para adicionar a lista de desejos
+    async function salvarProd(id:any,nome:any,descricao:any,imagem:any){
+        const lista = {id,nome,imagem, descricao}
+        
+        //cria lista
+        await AsyncStorage.setItem('ListaDesejos', JSON.stringify([lista]));
+
+        Alert.alert('Produto salvo com sucesso!!');
+
+        console.log(lista);
+
+    }
 
 
     return <View>
@@ -18,9 +32,12 @@ export default function Produto({ prod: { id, nome, descricao, imagem, slider} }
             </Card.Content>
             <Card.Cover source={imagem} style={styles.imagens} />
             <Card.Actions>
+                <TouchableOpacity style={styles.botao} onPress={()=>salvarProd(id,nome,descricao,imagem)}>
+                    <Ionicons name="heart" size={30} color="red"/>
+                </TouchableOpacity>
                 <TouchableOpacity onPress={() => acaoAbreFecha(true) } style={styles.botaoModal}>
                     <Texto>
-                        <Ionicons name="chevron-down-circle-sharp" size={25} color="Black"  />
+                        <Ionicons name="chevron-down-circle-sharp" size={30} color="Black"  />
                     </Texto>        
                 </TouchableOpacity>
             </Card.Actions>

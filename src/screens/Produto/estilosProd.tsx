@@ -81,6 +81,10 @@ const estilosProdutos=StyleSheet.create({
         justifyContent: 'center',
         textAlign:'center',
     },
+    botao:{
+    width: "50%",
+    left: '40%',
+  },
 })
 
 export default estilosProdutos;
