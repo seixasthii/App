@@ -27,6 +27,7 @@ export default function Index(){
             data={lista}
             renderItem={({item})=> <CadaItem {...item}/>}
             keyExtractor={({id})=> id}
+            numColumns={2}
         />
 
         <TouchableOpacity onPress={async()=>{await AsyncStorage.clear()}}>
